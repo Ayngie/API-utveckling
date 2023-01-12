@@ -1,0 +1,21 @@
+type Todo {
+  id: ID
+  name: String
+  description: String
+}
+
+type DeletedResourceResponse {
+  deletedId: ID
+  success: Boolean
+}
+
+type Query {
+  getTodoById(todoId: ID!): Todo
+  getAllTodos: [Todo]
+}
+
+type Mutation {
+  createTodo(name: String!, description: String): Todo # Utropstecken på name - required, annars blir det error nu. #OBS! INGET colon efter createTodo - då blev det felmeddelande!
+  updateTodo(id: ID, name: String!, description: String): Todo
+  deleteTodo(todoId: ID!): DeletedResourceResponse
+}

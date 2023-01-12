@@ -1,0 +1,9 @@
+# Schemat: är lite som dokumentation med en deklaration av våra datatyper.
+
+type Query {
+  helloQuery: String
+}
+
+type Mutation {
+  helloMutation(message: String): String
+}
