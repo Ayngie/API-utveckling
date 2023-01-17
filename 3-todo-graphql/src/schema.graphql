@@ -48,6 +48,7 @@ type DeletedResourceResponse {
 type Query {
   getTodoById(todoId: ID!): Todo
   getAllTodos: [Todo]
+  getAllTickets: [Ticket]
 }
 
 type Mutation {
@@ -56,6 +57,8 @@ type Mutation {
   deleteTodo(todoId: ID!): DeletedResourceResponse
 
   createTicket(input: CreateTicketInput!): Ticket # För mer om inputs - se nedan:
+  # updateTicket(input: UpdatedTicketInput!): Ticket
+  deleteTicket(ticketId: ID!): DeletedResourceResponse #Annars blir responsen bara att den är deleted, vi vill ha lite mer bekräftelse :)
 }
 
 # Inputs: tex. om vi tar emot ett antal parametrar, så kan vi skapa ett objekt som innehåller de parametrarna istället.

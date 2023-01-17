@@ -82,7 +82,27 @@ exports.resolvers = {
       // Return the todoData array (which should now hold the data for all our todos)
       return todoData;
     },
+
+    getAllTickets: async (_, args) => {
+      console.log(process.env.SHEETDB_URI);
+      let tickets = [];
+      try {
+        const response = await axios.get(process.env.SHEETDB_URI);
+        tickets = response.data;
+        if (response.data?.length > 0) tickets = response.data; //om listan är mer än noll så skicka response. ALLTSÅ får felmeddelande om är noll.
+      } catch (error) {
+        console.error(error);
+        return new GraphQLError("Ooops, something went wrong");
+      }
+      // return null; //så att ngt händer :) //Våra tickets ligger under data i vår response - alltså vår response.data ska innehålla alla våra tickets.
+      return tickets;
+    },
+
+    // deleteTicket: async (_, args) => {
+    //   return null; //bara så ngt händer
+    // },
   },
+
   Mutation: {
     createTodo: async (_, args) => {
       //obs! Glöm ej async!
@@ -254,7 +274,31 @@ exports.resolvers = {
 
     // updateTicket: async (_, args) => {
     // },
-    // deleteTicket: async (_, args) => {
-    // },
+
+    deleteTicket: async (_, args) => {
+      const ticketId = args.ticketId;
+      try {
+        const endpoint = `${process.env.SHEETDB_URI}/id/${ticketId}`; //denna rad är den som överensstämmer med dokumentationens rad om hur man deletar...
+
+        const response = await axios.delete(endpoint);
+
+        //console.log(endpoint);
+        console.log(response.data);
+        return {
+          deletedId: ticketId,
+          success: true,
+        };
+      } catch (error) {
+        console.error(error);
+        // return new GraphQLError("Oops, could not delete that");
+        return {
+          //Petter kommenterade bort GraphQLError funktionen o kör en liten egen return ist - varför? För att det kan vara långa errormeddelanden från graphql som är svåra för oss att förstå, medan här så kan vi se tydligare om error att det inte deletades det som vi ville.
+          deletedId: ticketId,
+          success: false,
+        };
+      }
+
+      //return null //används i början när vi sätter upp koden för att kunna kolla
+    },
   },
 };
