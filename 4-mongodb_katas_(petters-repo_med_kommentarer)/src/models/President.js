@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const PresidentSchema = new mongoose.Schema(
+const PresidentSchema = new mongoose.Schema( //mongoDB är utan schema men man vill ändå ha ett schema vilket man får från mongoose som har inbyggda funktioner som sort, find etc.
   {
     number: {
       type: Number,
@@ -31,6 +31,6 @@ const PresidentSchema = new mongoose.Schema(
     },
   },
   { timestamps: true }
-)
+);
 
-module.exports = mongoose.model('President', PresidentSchema)
+module.exports = mongoose.model("President", PresidentSchema);

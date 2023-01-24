@@ -4,7 +4,7 @@
 	- Fröt vi sår är den hårdkodade datan med presidenter, som i denna js-fils kod skickas in i databasen.
 - Denna testdata kan vi leka runt med i databasen, o sen varje gång vi kör denna kod så raderas våra ändingar i databasen, och mockdatan skickas in på nytt (typ "återställs") (allt i presidents tabellen). */
 
-const mongoose = require("mongoose"); //kopplat t mongodb?
+const mongoose = require("mongoose"); //importerar mongoose
 const { connectionString } = require("./config"); //vår connection string till databasen
 const President = require("./models/President"); //klassen typ
 const { presidents } = require("./data/presidents"); //mockdatan som jag förstår det
@@ -16,7 +16,7 @@ const seedPresidentsDb = async () => {
   try {
     // Connect to database
     mongoose.set("strictQuery", false); // https://stackoverflow.com/questions/74747476/deprecationwarning-mongoose-the-strictquery-option-will-be-switched-back-to  //ngn option som behövs för att ansluta till databasen?
-    conn = await mongoose.connect(connectionString); //ansluter till databasen
+    conn = await mongoose.connect(connectionString); //ansluter till databasen // You can connect to MongoDB with the `mongoose.connect()` method.
 
     // Clear database from any existing data
     console.log("Clearing database..."); //rensar så att varje g vi laddar om koden så återställs datan - det gör koden i hela denna funktion.
