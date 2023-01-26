@@ -1,4 +1,5 @@
 // Här är vår index-fil i vilken vi skriver våra resolvers - som ska matcha vårt schema!
+//testkommentar
 
 const path = require("path");
 const fsPromises = require("fs/promises");
