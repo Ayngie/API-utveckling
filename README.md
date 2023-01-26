@@ -1,6 +1,3 @@
-# API-utveckling
+# API development
 
-Repo for testing code and writing comments for better understanding, as I learn about API-development. 
-
-Education: Frontend developer at Medieinstitutet, Sthlm.
-Year 1, semester 2 (spring of 2023)
+Notes, comments, and testing code during the course API-development at Medieinstitutet Stockholms frontend developer education.

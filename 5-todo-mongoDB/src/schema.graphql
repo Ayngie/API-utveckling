@@ -1,0 +1,73 @@
+type Todo {
+  id: ID
+  name: String
+  description: String
+  # ticket: [Ticket] @TODO
+}
+
+type Ticket {
+  id: ID
+  title: String
+  description: String
+  type: TicketType
+  priority: TicketPriority
+  status: TicketStatus
+  # todo: Todo @TODO
+}
+
+# enums
+# = Är ett sätt att ha förbestämda val. Miniobjekt m förbestämda val.
+# Syntax: ALL_CAPS, samt UNDERSCORE_MELLAN_ORD
+
+enum TicketType {
+  BUG
+  NEW_FEATURE
+  OTHER
+}
+
+enum TicketPriority {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum TicketStatus {
+  NEW
+  IN_DEVELOPMENT
+  IN_REVIEW
+  READY_FOR_TEST
+  COMPLETED
+}
+
+type DeletedResourceResponse {
+  deletedId: ID
+  success: Boolean
+}
+
+type Query {
+  getTodoById(todoId: ID!): Todo
+  getAllTodos: [Todo]
+  getAllTickets: [Ticket]
+}
+
+type Mutation {
+  createTodo(name: String!, description: String): Todo # Utropstecken på name - required, annars blir det error nu. #OBS! INGET colon efter createTodo - då blev det felmeddelande!
+  updateTodo(id: ID!, name: String!, description: String!): Todo
+  deleteTodo(todoId: ID!): DeletedResourceResponse
+
+  createTicket(input: CreateTicketInput!): Ticket # För mer om inputs - se nedan:
+  # updateTicket(input: UpdatedTicketInput!): Ticket
+  deleteTicket(ticketId: ID!): DeletedResourceResponse #Annars blir responsen bara att den är deleted, vi vill ha lite mer bekräftelse :)
+}
+
+# Inputs: tex. om vi tar emot ett antal parametrar, så kan vi skapa ett objekt som innehåller de parametrarna istället.
+# Tex: `CreateTodoInputs` och lägger in `name, description, och todoType`.
+
+input CreateTicketInput {
+  title: String!
+  description: String
+  type: TicketType!
+  priority: TicketPriority
+  todoId: ID! # Vi måste ha ett todoId för vi måste veta vilken todo som ska ha den här ticketen...
+}
