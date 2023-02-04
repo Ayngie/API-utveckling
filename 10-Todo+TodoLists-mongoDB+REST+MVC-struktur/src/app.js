@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 // const Todo = require("./models/Todo");
 const todoRoutes = require("./routes/todoRoutes");
+const todoListRoutes = require("./routes/todoListRoutes");
 const { errorMiddleware } = require("./middleware/errorMiddleware");
 const { notFoundMiddleware } = require("./middleware/notFoundMiddleware");
 
@@ -23,7 +24,7 @@ app.use((req, res, next) => {
 /* ------- 4) Create our routes ------- */
 
 app.use("/api/v1/todos" /* /... = see Router => */, todoRoutes);
-// app.use("/api/v1/todoLists" /* /... = see Router => */, todoListRoutes)
+app.use("/api/v1/todoLists" /* /... = see Router => */, todoListRoutes);
 
 // CRUD Todos:
 

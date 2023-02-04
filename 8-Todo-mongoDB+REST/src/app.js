@@ -38,9 +38,9 @@ app.get("/api/v1/todos", async (req, res) => {
       meta: {
         // meta information about request
         total: totalTodosInDatabase, // Total num todos available in db
-        limit: limit, // Num of projects asked for
-        offset: offset, // Num or projects asked to skip
-        count: todos.length, // Num of projects sent back
+        limit: limit, // Num of todos asked for
+        offset: offset, // Num or todos asked to skip
+        count: todos.length, // Num of todos sent back
       },
     });
   } catch (error) {
@@ -106,7 +106,7 @@ app.post("/api/v1/todos", async (req, res) => {
         // Location header = URI pointing to endpoint where user can get new todo
         .setHeader(
           "Location",
-          `http://localhost:${process.env.PORT}/api/v1/projects/${newTodo._id}`
+          `http://localhost:${process.env.PORT}/api/v1/todos/${newTodo._id}`
         )
         .status(201) //Allt gått bra, ny todo skapad
         .json(newTodo) //valfri return - så användaren slipper göra en query för att ta fram denna data (nya skapade todon).

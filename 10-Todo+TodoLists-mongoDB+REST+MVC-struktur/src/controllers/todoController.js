@@ -51,6 +51,7 @@ exports.createNewTodo = async (req, res, next) => {
   // Hämta data från req.body och placera i lokal variabel
   const name = req.body.name || "";
   const description = req.body.description || "";
+  const todoListId = req.body.todoListId;
 
   // If (no name || name is empty string) respond bad request
   if (!name) throw new BadRequestError("You must provide a name");
@@ -59,6 +60,7 @@ exports.createNewTodo = async (req, res, next) => {
   const newTodo = await Todo.create({
     name: name,
     description: description,
+    todoListId: todoListId,
   });
 
   // Respond
