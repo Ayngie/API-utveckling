@@ -2,6 +2,7 @@ require("dotenv").config();
 require("express-async-errors"); //Catches errors and passes them to our error midldeware
 const express = require("express");
 const mongoose = require("mongoose");
+const apiRoutes = require("./routes/api");
 // const Todo = require("./models/Todo");
 const todoRoutes = require("./routes/todoRoutes");
 const todoListRoutes = require("./routes/todoListRoutes");
@@ -26,6 +27,7 @@ app.use("/helloWorld", (request, response) => {
   return response.send("Hello World!");
 });
 
+app.use("/api/v1", apiRoutes);
 app.use("/api/v1/todos" /* /... = see Router => */, todoRoutes);
 app.use("/api/v1/todoLists" /* /... = see Router => */, todoListRoutes);
 
