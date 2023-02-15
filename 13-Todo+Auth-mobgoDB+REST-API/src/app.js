@@ -22,6 +22,9 @@ app.use((req, res, next) => {
 });
 
 /* ------- 4) ROUTES / Create our routes ------- */
+app.use("/helloWorld", (request, response) => {
+  return response.send("Hello World!");
+});
 
 app.use("/api/v1/todos" /* /... = see Router => */, todoRoutes);
 app.use("/api/v1/todoLists" /* /... = see Router => */, todoListRoutes);
@@ -52,7 +55,7 @@ app.use(errorMiddleware); // Error middleware (used to send uniform response in 
 /* ------- 2) SERVER SETUP / Start server ------- */
 const port = process.env.PORT || 5000;
 
-async function run() {
+const run = async () => {
   try {
     // Connect to MongoDB database (via Mongoose)
     mongoose.set("strictQuery", false);
@@ -61,11 +64,17 @@ async function run() {
 
     // Start server; listen to requests on port
     app.listen(port, () => {
-      console.log(`Server running on http://localhost:${port}`);
+      console.log(
+        `Server is listening on ${
+          process.env.NODE_ENV === "development" ? "http://localhost:" : "port "
+        }${port}`
+      );
+      //FÖRKLARING: Jag kollar om det finns en variabel i .env som heter NODE_ENV och om det finns, och den = "development" så lägger jag till localhost i mitt loggade meddelande.
+      //NODE_ENV är det man använder för att säga vilken miljö appen körs i; i produktion (alltså den är live på nätet) eller lokalt på min dator (in development)
     });
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 run();
