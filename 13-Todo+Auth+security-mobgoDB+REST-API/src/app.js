@@ -9,6 +9,12 @@ const todoListRoutes = require("./routes/todoListRoutes");
 const { errorMiddleware } = require("./middleware/errorMiddleware");
 const { notFoundMiddleware } = require("./middleware/notFoundMiddleware");
 
+//Security imports (CORS)
+const cors = require("cors");
+const xss = require("xss-clean");
+const mongoSanitize = require("express-mongo-sanitize");
+const { rateLimit } = require("express-rate-limit");
+
 /* ------- 1) CREATE EXPRESS APP / Skapa våran Express app ------- */
 const app = express();
 
@@ -21,6 +27,27 @@ app.use((req, res, next) => {
   // when above code executed; go on to next middleware/routing
   next();
 });
+
+/* ------- 6) SECURITY MIDDLEWARE ------- */
+app.use(cors());
+
+//Kan även se ut så här: (obs dubbekolla koden... kan va lite fel).
+// app.use(
+//   cors({
+//     [origin: "https://localhost:5000", "http://www.exempelpådomän.com"],
+//     [method: "GET"]
+// })); //kommer dock fortf funka m postman... De ignorerar den iom bara är testgrejer.
+
+app.use(xss()); //ändrar om scriptklamrar i user input till andra tecken, så ej kan skickas in malicious inline js i user input. Exempel på input sanitization.
+
+app.use(mongoSanitize()); //plockar bort keys som börjar med . eller $ iom de anv när man gör mongoose queries etc.
+
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000, //står för 15 min,
+    max: 60, //max 60 requests får skickas till vår applikation under 15 minuter
+  })
+);
 
 /* ------- 4) ROUTES / Create our routes ------- */
 app.use("/helloWorld", (request, response) => {

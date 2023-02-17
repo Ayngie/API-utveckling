@@ -51,3 +51,8 @@ exports.authorizeRoles = (...roles) => {
     next();
   };
 };
+
+/* ----------------------------------------------------- */
+
+//req.user får vi från vår authentication middleware,
+//viktigt därför att authentication sker före authorization.

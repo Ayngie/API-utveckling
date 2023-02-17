@@ -30,3 +30,13 @@ exports.loginSchema = [
   body("email").isEmail().withMessage("You must provide a valid email address"),
   body("password").not().isEmpty().withMessage("You must provide a password"),
 ];
+
+/* ----------------------------------------------------- */
+
+//validering för att anv ska få veta om ngt gick fel o för att siten ska funka.
+//anv får info först - så de vet om de gjort fel (innan de kontaktar databasen).
+
+//anv express för validering - lagt detta i auth routes också.
+
+//Detta är 80% kopierat från express validation dokumentation...
+//

@@ -26,11 +26,11 @@ exports.errorMiddleware = (error, req, res, next) => {
   // Reformats Mongoose error when a duplicate value is entered for a...
   // ...field that has the "unique: true" validation
   // prettier-ignore
-  if (error.code && error.code === 11000) {
+  if (error.code && error.code === 11000) { //mongoose slänger en error på 11000 om man försöker skapa duplikatvärde?
     customError.message = `Duplicate value entered for ${Object.keys(
       error.keyValue
     )} field, please choose another value`
-    customError.statusCode = 400
+    customError.statusCode = 400 //vi ändrar statuskoden till 400, så vi ej anv mongoose errormeddelande på 11000 //ser bättre ut o vi döljer för ev. anv som vill hacka vad som gick fel.
   }
 
   if (error.name === "CastError") {

@@ -84,6 +84,7 @@ exports.login = async (req, res) => {
   const token = jwt.sign(jwtPayload, process.env.JWT_SECRET, {
     expiresIn: /* '1d' */ "2h",
   });
+  //1d = 1 day, 2h = 2 hours, 1m = 1 minut, 1s = 1 sek
 
   //   const jwtToken = jwt.sign(jwtPayload, process.env.JWT_SECRET, {
   //     expiresIn: "1d" /* 2h */,
@@ -93,7 +94,7 @@ exports.login = async (req, res) => {
   // Return the token
   return res.json({
     token: token,
-    user: jwtPayload,
+    user: jwtPayload, //ger frontenden tillgång till användarnamn etc så vi ej beh anv deras token för att ta reda på den info.
   });
 
   //   return res.json({ token: jwtToken, user: jwtPayload });
